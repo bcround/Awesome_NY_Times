@@ -10,6 +10,7 @@ module.exports = {
     'prettier',
   ],
   rules: {
+    'react/react-in-jsx-scope': 0,
     'linebreak-style': 0,
     'import/prefer-default-export': 0,
     'prettier/prettier': 0,
