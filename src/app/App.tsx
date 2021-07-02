@@ -1,8 +1,8 @@
 import React from 'react';
-import { Test } from '@/components';
+import { ArticleSearch } from '@/pages';
 
 const App: React.FC = () => {
-  return <Test />;
+  return <ArticleSearch />;
 };
 
 export default App;
