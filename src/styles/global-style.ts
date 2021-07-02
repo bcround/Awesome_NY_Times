@@ -20,6 +20,13 @@ const GlobalStyle = createGlobalStyle`
   button {
     cursor: pointer;
   }
+  a {
+    text-decoration: none;
+    color:inherit;
+  }
+  a:visited {
+    color: inherit; 
+  }
 `;
 
 export default GlobalStyle;
