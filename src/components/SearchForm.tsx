@@ -9,10 +9,24 @@ type SearchFormProps = {
 };
 
 const StyledForm = styled.form`
-  width: 40%;
+  width: 50%;
+  height: 50px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
+  font-size: 2.4rem;
+  @media (max-width: 1440px) {
+    width: 40%;
+  }
+  @media (max-width: 1024px) {
+    width: 400px;
+    height: 40px;
+    font-size: 2rem;
+  }
+  @media (max-width: 512px) {
+    width: 250px;
+    font-size: 1.5rem;
+  }
 `;
 
 const SearchButton = styled(Button)`

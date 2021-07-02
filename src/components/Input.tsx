@@ -17,19 +17,24 @@ const InputWrapper = styled.div`
 
 const StyledInput = styled.input`
   width: 100%;
-  height: 50px;
+  height: 100%;
   outline: none;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 2.4rem;
   padding: 0 0 0 10px;
+  font-size: 2.4rem;
+  @media (max-width: 1024px) {
+    font-size: 2rem;
+  }
+  @media (max-width: 512px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const StlyedLabel = styled.label`
   position: absolute;
   left: 10px;
   top: 12.5px;
-  font-size: 2.4rem;
   color: #aaa;
 `;
 
