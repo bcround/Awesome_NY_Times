@@ -10,6 +10,10 @@ module.exports = {
     'prettier',
   ],
   rules: {
+    '@typescript-eslint/no-explicit-any': 0,
+    'no-underscore-dangle': 0,
+    camelcase: 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
     'react/react-in-jsx-scope': 0,
     'linebreak-style': 0,
     'import/prefer-default-export': 0,
