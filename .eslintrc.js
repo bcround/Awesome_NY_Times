@@ -10,6 +10,7 @@ module.exports = {
     'prettier',
   ],
   rules: {
+    'no-plusplus': 0,
     '@typescript-eslint/no-explicit-any': 0,
     'no-underscore-dangle': 0,
     camelcase: 0,
