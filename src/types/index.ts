@@ -20,6 +20,18 @@ export interface Article {
   _id: string;
   word_count: number;
   uri: string;
+  isLiked: boolean;
+}
+
+export interface ArticleInfo {
+  _id: string;
+  multimedia: Multimedia[];
+  headline: Headline;
+  abstract: string;
+  pub_date: string;
+  section_name: string;
+  byline: Byline;
+  web_url: string;
 }
 
 interface Byline {
