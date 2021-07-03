@@ -1,10 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import styled from 'styled-components';
+import { Response } from '@/types';
+import { a11yHiddenStyle } from '@/styles/global-style';
 import Input from './Input';
 import Button from './Button';
 import SVGIcon from './SVGIcon';
 
 type SearchFormProps = {
+  data: Response | null;
   onSubmitKeyword: (keyword: string) => void;
 };
 
@@ -29,6 +32,10 @@ const StyledForm = styled.form`
   }
 `;
 
+const Heading = styled.h3`
+  ${a11yHiddenStyle}
+`;
+
 const SearchButton = styled(Button)`
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -44,11 +51,13 @@ const SearchIcon = styled(SVGIcon)`
   }
 `;
 
-const SearchForm = ({ onSubmitKeyword }: SearchFormProps) => {
+const SearchForm = ({ data, onSubmitKeyword }: SearchFormProps) => {
   const [input, setInput] = useState('');
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (data?.keyword === input) return;
+
     onSubmitKeyword(input);
   };
 
@@ -58,6 +67,7 @@ const SearchForm = ({ onSubmitKeyword }: SearchFormProps) => {
 
   return (
     <StyledForm onSubmit={onSubmit}>
+      <Heading>Search Box</Heading>
       <Input id="searchInput" value={input} placeHolder="Type a KEYWORD for news" onChange={onChange} />
       <SearchButton>
         <SearchIcon className="search-icon" iconType="Search" />
