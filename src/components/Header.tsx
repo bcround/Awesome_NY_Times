@@ -27,7 +27,11 @@ const Navigation = styled.nav`
   }
 `;
 
-const Heading = styled.h1``;
+const Heading = styled.h1`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+`;
 
 const LogoIcon = styled(SVGIcon)``;
 
@@ -37,7 +41,23 @@ const A11ySpan = styled.span`
 
 const HomeLink = styled(Link)``;
 
-const FavoriteLink = styled(Link)``;
+const FavoriteLink = styled(Link)`
+  display: flex;
+  align-items: center;
+`;
+
+const FavoriteIcon = styled(SVGIcon)`
+  width: 40px;
+  height: 40px;
+  path {
+    fill: #fff;
+  }
+`;
+
+const FavoriteTitle = styled.p`
+  font-size: 2rem;
+  color: #fff;
+`;
 
 const Header = () => {
   return (
@@ -49,7 +69,10 @@ const Header = () => {
             <LogoIcon className="logo" iconType="Logo" />
           </HomeLink>
         </Heading>
-        {/* <FavoriteLink /> */}
+        <FavoriteLink to="/favorites">
+          <FavoriteIcon className="favorite-icon" iconType="HeartFilled" />
+          <FavoriteTitle>Favorites</FavoriteTitle>
+        </FavoriteLink>
       </Navigation>
     </HeaderBar>
   );

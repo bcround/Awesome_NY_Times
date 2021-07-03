@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArticleSearch, PageNotFound } from '@/pages';
+import { ArticleSearch, Favorites, PageNotFound } from '@/pages';
 import { Header } from '@/components';
 import styled from 'styled-components';
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -13,6 +13,7 @@ const App: React.FC = () => {
       <AppMain>
         <Switch>
           <Route path="/" exact component={ArticleSearch} />
+          <Route path="/favorites" exact component={Favorites} />
           <Route path="/page-not-found" component={PageNotFound} />
           <Redirect to="/page-not-found" />
         </Switch>
