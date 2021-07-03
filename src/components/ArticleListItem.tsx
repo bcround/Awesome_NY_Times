@@ -129,10 +129,10 @@ const ArticleListItem = ({ article }: ArticleListItemProps) => {
         </ArticleLink>
         <ArticleInfo>
           <ArticleDate>{convertDate(pub_date)}</ArticleDate>
-          <ArticleSection>{section_name}</ArticleSection>
+          {section_name && <ArticleSection>{section_name}</ArticleSection>}
         </ArticleInfo>
         <ArticleInfo>
-          <ArticleAuthor>{original}</ArticleAuthor>
+          {original ? <ArticleAuthor>{original}</ArticleAuthor> : <span>No Author</span>}
           <FavoriteButton>
             <FavoriteIcon className="favorite-icon" iconType="HeartFilled" />
           </FavoriteButton>
