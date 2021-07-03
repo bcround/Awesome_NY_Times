@@ -1,7 +1,9 @@
 import { SearchForm, ArticleList, LoadingSpinner } from '@/components';
 import { RootState } from '@/modules';
-import { getArticleThunk, resetArticle } from '@/modules/article';
+import { getArticleThunk, resetArticle, toggleLike } from '@/modules/article';
+import { addFavorite, removeFavorite } from '@/modules/favorite';
 import { a11yHiddenStyle } from '@/styles/global-style';
+import { ArticleInfo } from '@/types';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -35,13 +37,31 @@ const ArticleSearch = () => {
     dispatch(getArticleThunk(keyword, page));
   };
 
+  const onClickAddFavorite = (articleInfo: ArticleInfo) => {
+    dispatch(toggleLike(articleInfo._id));
+    dispatch(addFavorite(articleInfo));
+  };
+
+  const onClickRemoveFavorite = (id: string) => {
+    dispatch(toggleLike(id));
+    dispatch(removeFavorite(id));
+  };
+
   return (
     <ArticleSearchSection>
       <Heading>Article Search Page</Heading>
       <SearchForm data={data} onSubmitKeyword={onSubmitKeyword} />
       {loading && !data && <LoadingSpinner />}
       {error && <p>에러 발생...</p>}
-      {data && <ArticleList data={data} loading={loading} onClickLoadMore={onClickLoadMore} />}
+      {data && (
+        <ArticleList
+          data={data}
+          loading={loading}
+          onClickLoadMore={onClickLoadMore}
+          onClickAddFavorite={onClickAddFavorite}
+          onClickRemoveFavorite={onClickRemoveFavorite}
+        />
+      )}
     </ArticleSearchSection>
   );
 };

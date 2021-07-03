@@ -1,11 +1,16 @@
-import { Article } from '@/types';
+import { RootState } from '@/modules';
+import { Article, ArticleInfo } from '@/types';
 import { convertDate, getSrcOfImage, limitWordsTo30 } from '@/utils/processData';
+import { useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from './Button';
 import SVGIcon from './SVGIcon';
 
 type ArticleListItemProps = {
   article: Article;
+  onClickAddFavorite: (articleInfo: ArticleInfo) => void;
+  onClickRemoveFavorite: (id: string) => void;
 };
 
 const MEDIA_BASE_URL = 'https://static01.nyt.com';
@@ -80,7 +85,7 @@ const ArticleParagraph = styled.p`
   }
 `;
 
-const ArticleInfo = styled.div`
+const ArticleMiscInfo = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
@@ -106,37 +111,63 @@ const ArticleAuthor = styled.span``;
 
 const FavoriteButton = styled(Button)``;
 
-const FavoriteIcon = styled(SVGIcon)``;
+const FavoriteAddedIcon = styled(SVGIcon)`
+  width: 25px;
+  height: 25px;
+  path {
+    fill: #f00;
+  }
+`;
 
-const ArticleListItem = ({ article }: ArticleListItemProps) => {
-  const {
-    multimedia,
-    headline: { main },
-    abstract,
-    pub_date,
-    section_name,
-    byline: { original },
-    web_url,
-  } = article;
+const FavoriteNotAddedIcon = styled(SVGIcon)`
+  width: 25px;
+  height: 25px;
+  path {
+    fill: #f00;
+  }
+`;
+
+const ArticleListItem = ({ article, onClickAddFavorite, onClickRemoveFavorite }: ArticleListItemProps) => {
+  const favoriteList = useSelector((state: RootState) => state.favorite);
+  const { _id, multimedia, headline, abstract, pub_date, section_name, byline, web_url } = article;
+
+  const checkIfLiked = useCallback(() => {
+    favoriteList.forEach((favorite) => {
+      if (favorite._id === _id) article.isLiked = true;
+    });
+  }, []);
+
+  checkIfLiked();
+
+  const onClick = () => {
+    if (article.isLiked) onClickRemoveFavorite(_id);
+    else onClickAddFavorite({ _id, multimedia, headline, abstract, pub_date, section_name, byline, web_url });
+  };
 
   return (
     <StyledArticleListItem>
-      {multimedia.length ? <ArticleImage alt={main} src={`${MEDIA_BASE_URL}/${getSrcOfImage(multimedia)}`} /> : null}
+      {multimedia.length ? (
+        <ArticleImage alt={headline.main} src={`${MEDIA_BASE_URL}/${getSrcOfImage(multimedia)}`} />
+      ) : null}
       <ArticleInfoWrapper>
         <ArticleLink href={web_url}>
-          <ArticleTitle>{main}</ArticleTitle>
+          <ArticleTitle>{headline.main}</ArticleTitle>
           <ArticleParagraph>{limitWordsTo30(abstract)}</ArticleParagraph>
         </ArticleLink>
-        <ArticleInfo>
+        <ArticleMiscInfo>
           <ArticleDate>{convertDate(pub_date)}</ArticleDate>
           {section_name && <ArticleSection>{section_name}</ArticleSection>}
-        </ArticleInfo>
-        <ArticleInfo>
-          {original ? <ArticleAuthor>{original}</ArticleAuthor> : <span>No Author</span>}
-          <FavoriteButton>
-            <FavoriteIcon className="favorite-icon" iconType="HeartFilled" />
+        </ArticleMiscInfo>
+        <ArticleMiscInfo>
+          {byline.original ? <ArticleAuthor>{byline.original}</ArticleAuthor> : <span>No Author</span>}
+          <FavoriteButton onClick={onClick}>
+            {article.isLiked ? (
+              <FavoriteNotAddedIcon className="favorite-added-icon" iconType="HeartFilled" />
+            ) : (
+              <FavoriteAddedIcon className="favorite-not-added-icon" iconType="HeartEmpty" />
+            )}
           </FavoriteButton>
-        </ArticleInfo>
+        </ArticleMiscInfo>
       </ArticleInfoWrapper>
     </StyledArticleListItem>
   );

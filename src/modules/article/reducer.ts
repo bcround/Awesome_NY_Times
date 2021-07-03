@@ -1,7 +1,7 @@
 import { AnyAsyncActionCreator, Response } from '@/types';
 import { transformToArray } from '@/utils/reducerUtils';
 import { ActionType, createReducer, getType } from 'typesafe-actions';
-import { getArticleAsync, resetArticle } from './actions';
+import { getArticleAsync, resetArticle, toggleLike } from './actions';
 import { ArticleAction, AsyncState } from './types';
 
 const initialState: AsyncState<Response, Error> = {
@@ -13,10 +13,24 @@ const initialState: AsyncState<Response, Error> = {
 const articleAsyncReducer = (state: AsyncState<Response, Error>, action: ActionType<AnyAsyncActionCreator>) => {
   const [request, success, failure] = transformToArray(getArticleAsync).map(getType);
   const reset = getType(resetArticle);
+  const toggle = getType(toggleLike);
 
   switch (action.type) {
+    case toggle:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          docs: state.data
+            ? state.data.docs.map((article) =>
+                article._id === action.payload ? { ...article, isLiked: !article.isLiked } : article,
+              )
+            : null,
+        },
+      };
     case reset:
       return {
+        ...state,
         loading: false,
         data: null,
         error: null,
@@ -50,7 +64,7 @@ const articleAsyncReducer = (state: AsyncState<Response, Error>, action: ActionT
 };
 
 const article = createReducer<AsyncState<Response, Error>, ArticleAction>(initialState).handleAction(
-  [...transformToArray(getArticleAsync), resetArticle],
+  [...transformToArray(getArticleAsync), resetArticle, toggleLike],
   articleAsyncReducer,
 );
 

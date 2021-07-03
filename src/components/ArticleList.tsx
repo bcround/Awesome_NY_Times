@@ -1,5 +1,5 @@
 import { a11yHiddenStyle } from '@/styles/global-style';
-import { Response } from '@/types';
+import { ArticleInfo, Response } from '@/types';
 import styled from 'styled-components';
 import ArticleListItem from './ArticleListItem';
 import Button from './Button';
@@ -9,6 +9,8 @@ type ArticleListProps = {
   data: Response;
   loading: boolean;
   onClickLoadMore: (keyword: string, page: number) => void;
+  onClickAddFavorite: (articleInfo: ArticleInfo) => void;
+  onClickRemoveFavorite: (id: string) => void;
 };
 
 const StyledArticleList = styled.ul`
@@ -44,7 +46,13 @@ const NoResultsParagraph = styled.p`
 
 let page = 1;
 
-const ArticleList = ({ data, loading, onClickLoadMore }: ArticleListProps) => {
+const ArticleList = ({
+  data,
+  loading,
+  onClickLoadMore,
+  onClickAddFavorite,
+  onClickRemoveFavorite,
+}: ArticleListProps) => {
   const {
     docs: articleList,
     meta: { hits: numOfArticles },
@@ -60,7 +68,14 @@ const ArticleList = ({ data, loading, onClickLoadMore }: ArticleListProps) => {
     <StyledArticleList>
       <Heading>Article List</Heading>
       {articleList.length ? (
-        articleList.map((article) => <ArticleListItem key={article._id} article={article} />)
+        articleList.map((article) => (
+          <ArticleListItem
+            key={article._id}
+            article={article}
+            onClickAddFavorite={onClickAddFavorite}
+            onClickRemoveFavorite={onClickRemoveFavorite}
+          />
+        ))
       ) : (
         <NoResultsParagraph>No search results found</NoResultsParagraph>
       )}
