@@ -82,4 +82,22 @@ interface Legacy {
   wide?: string;
 }
 
+interface Meta {
+  hits: number;
+  offset: number;
+  time: number;
+}
+
+export interface Response {
+  docs: Article[];
+  meta: Meta;
+  keyword: string;
+}
+
+export interface ArticleResponse {
+  status: string;
+  copyright: string;
+  response: Response;
+}
+
 export type AnyAsyncActionCreator = AsyncActionCreatorBuilder<any, any, any>;
