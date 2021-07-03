@@ -1,6 +1,8 @@
 import { ReactComponent as Search } from '@/assets/Search.svg';
 import { ReactComponent as HeartEmpty } from '@/assets/HeartEmpty.svg';
 import { ReactComponent as HeartFilled } from '@/assets/HeartFilled.svg';
+import { ReactComponent as Logo } from '@/assets/Logo.svg';
+import { ReactComponent as LoadingSpinner } from '@/assets/LoadingSpinner.svg';
 
 type SVGIconProps = {
   className: string;
@@ -19,6 +21,8 @@ const svgIcons: SVGIcons = {
   Search,
   HeartEmpty,
   HeartFilled,
+  Logo,
+  LoadingSpinner,
 };
 
 const SVGIcon = ({ className, iconType }: SVGIconProps) => {
