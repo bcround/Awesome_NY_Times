@@ -35,8 +35,6 @@ const StyledArticleListItem = styled.li`
   }
 `;
 
-const ArticleLink = styled.a``;
-
 const ArticleInfoWrapper = styled.div`
   width: 55%;
   @media (max-width: 768px) {
@@ -98,18 +96,12 @@ const ArticleMiscInfo = styled.div`
   }
 `;
 
-const ArticleDate = styled.span``;
-
 const ArticleSection = styled.span`
   border-radius: 2px;
   padding: 4px;
   background-color: #aaa;
   color: #fff;
 `;
-
-const ArticleAuthor = styled.span``;
-
-const FavoriteButton = styled(Button)``;
 
 const FavoriteAddedIcon = styled(SVGIcon)`
   width: 25px;
@@ -150,23 +142,23 @@ const ArticleListItem = ({ article, onClickAddFavorite, onClickRemoveFavorite }:
         <ArticleImage alt={headline.main} src={`${MEDIA_BASE_URL}/${getSrcOfImage(multimedia)}`} />
       ) : null}
       <ArticleInfoWrapper>
-        <ArticleLink href={web_url}>
+        <a href={web_url}>
           <ArticleTitle>{headline.main}</ArticleTitle>
           <ArticleParagraph>{limitWordsTo30(abstract)}</ArticleParagraph>
-        </ArticleLink>
+        </a>
         <ArticleMiscInfo>
-          <ArticleDate>{convertDate(pub_date)}</ArticleDate>
+          <span>{convertDate(pub_date)}</span>
           {section_name && <ArticleSection>{section_name}</ArticleSection>}
         </ArticleMiscInfo>
         <ArticleMiscInfo>
-          {byline.original ? <ArticleAuthor>{byline.original}</ArticleAuthor> : <span>No Author</span>}
-          <FavoriteButton onClick={onClick}>
+          {byline.original ? <span>{byline.original}</span> : <span>No Author</span>}
+          <Button onClick={onClick}>
             {article.isLiked ? (
               <FavoriteNotAddedIcon className="favorite-added-icon" iconType="HeartFilled" />
             ) : (
               <FavoriteAddedIcon className="favorite-not-added-icon" iconType="HeartEmpty" />
             )}
-          </FavoriteButton>
+          </Button>
         </ArticleMiscInfo>
       </ArticleInfoWrapper>
     </StyledArticleListItem>

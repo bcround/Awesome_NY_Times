@@ -33,13 +33,9 @@ const Heading = styled.h1`
   justify-content: center;
 `;
 
-const LogoIcon = styled(SVGIcon)``;
-
 const A11ySpan = styled.span`
   ${a11yHiddenStyle}
 `;
-
-const HomeLink = styled(Link)``;
 
 const FavoriteLink = styled(Link)`
   display: flex;
@@ -64,10 +60,10 @@ const Header = () => {
     <HeaderBar>
       <Navigation>
         <Heading>
-          <HomeLink to="/">
+          <Link to="/">
             <A11ySpan>Awesome NY Times</A11ySpan>
-            <LogoIcon className="logo" iconType="Logo" />
-          </HomeLink>
+            <SVGIcon className="logo" iconType="Logo" />
+          </Link>
         </Heading>
         <FavoriteLink to="/favorites">
           <FavoriteIcon className="favorite-icon" iconType="HeartFilled" />
